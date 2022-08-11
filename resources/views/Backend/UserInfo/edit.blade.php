@@ -1,15 +1,16 @@
 @extends('layouts.pos_master')
 
 @section('title')
- Add User
+ Update User
 @endsection
 
 
 
 
 @section('content')
-<form action="{{ route('adduser.store') }}" method="POST">
+<form action="{{ route('adduser.update', $edit->id) }}" method="POST">
 @csrf
+@method('PUT')
 <div class="row mb-3">
     <div class="col-12 col-sm-12 col-md-12 col-lg-12">
         <div class="card p-3">
@@ -19,13 +20,13 @@
                     <div class="col-12 col-sm-6 col-md-6 col-lg-6">
                         <div class="form-group">
                             <label>First Name</label>
-                            <input type="text" name="first_name" id="firstName" class="form-control"/>
+                            <input type="text" name="first_name" id="firstName" value="{{ $edit->first_name }}" class="form-control"/>
                         </div>
                     </div>
                     <div class="col-12 col-sm-6 col-md-6 col-lg-6">
                         <div class="form-group">
                             <label>Last Name Name</label>
-                            <input type="text" name="last_name" id="lastName" class="form-control"/>
+                            <input type="text" name="last_name" value="{{ $edit->last_name }}" id="lastName" class="form-control"/>
                         </div>
                     </div>
                 </div>
@@ -33,13 +34,13 @@
                     <div class="col-12 col-sm-6 col-md-6 col-lg-6">
                         <div class="form-group">
                             <label>Email</label>
-                            <input type="email" name="email" id="email" class="form-control"/>
+                            <input type="email" name="email" value="{{ $user->email }}" id="email" class="form-control"/>
                         </div>
                     </div>
                     <div class="col-12 col-sm-6 col-md-6 col-lg-6">
                         <div class="form-group">
                             <label></label>
-                            <input type="checkbox" name="status" id="status" value="active"/> Is Active
+                            <input type="checkbox" {{ $edit->status == "active" ? 'checked' : ' ' }} name="status" id="status" value="active"/> Is Active
                         </div>
                     </div>
                 </div>
@@ -55,7 +56,7 @@
                     <div class="col-12 col-sm-6 col-md-6 col-lg-6">
                         <div class="form-group">
                             <label>User Name</label>
-                            <input type="text" name="user_name" id="userName" class="form-control"/>
+                            <input type="text" name="user_name" value="{{ $user->name }}" id="userName" class="form-control"/>
                         </div>
                     </div>
                     <div class="col-12 col-sm-6 col-md-6 col-lg-6">
@@ -77,7 +78,7 @@
                             <label>Role</label>
                             <select name="role_id" class="form-control">
                                 @foreach($roles as $role)
-                                <option value="{{ $role->id }}">{{  $role->name }}</option>
+                                <option {{ $role->id == $edit->role_id ? 'selected' : ' ' }}  value="{{ $role->id }}">{{  $role->name }}</option>
                                 @endforeach
                             </select>
                         </div>

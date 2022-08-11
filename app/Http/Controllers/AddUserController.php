@@ -4,6 +4,11 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
+use App\Models\UserInfo;
+use App\Models\User;
+use Brian2694\Toastr\Facades\Toastr;
+use Hash;
+use Carbon\Carbon;
 
 class AddUserController extends Controller
 {
@@ -14,7 +19,8 @@ class AddUserController extends Controller
      */
     public function index()
     {
-        return view('Backend.UserInfo.index');
+        $user_info = UserInfo::with('user_info','user_role')->get();
+        return view('Backend.UserInfo.index', compact('user_info'));
     }
 
     /**
@@ -37,7 +43,30 @@ class AddUserController extends Controller
      */
     public function store(Request $request)
     {
-            return  $request->all();
+
+        $user_id = User::create([
+            'name'=>$request->user_name,
+            'email'=>$request->email,
+            'password'=>Hash::make($request->password),
+            'created_at'=>Carbon::now(),
+        ]);
+
+        UserInfo::create([
+            'user_id'=>$user_id->id,
+            'first_name'=>$request->first_name,
+            'last_name'=>$request->last_name,
+            'status'=>$request->status,
+            'role_id' => $request->role_id,
+            'created_at'=>Carbon::now(),
+        ]);
+
+        $user_id->assignRole($request->role_id);
+
+        Toastr::success("User Insert Successfully!!");
+
+        return redirect()->route('adduser.index');
+
+        
     }
 
     /**
@@ -59,7 +88,10 @@ class AddUserController extends Controller
      */
     public function edit($id)
     {
-        //
+       $roles = Role::all();
+       $edit = UserInfo::find($id);
+       $user =  User::where('id',$edit->user_id)->first();
+       return view('Backend.UserInfo.edit', compact('roles','edit','user'));
     }
 
     /**
@@ -71,7 +103,35 @@ class AddUserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $user_info = UserInfo::find($id);
+        $user = User::where('id',$user_info->user_id)->first();
+        User::where('id',$user->id)->update([
+            'name'=>$request->user_name,
+            'email'=>$request->email,
+            'password'=>Hash::make($request->password),
+            'updated_at'=>Carbon::now(),
+        ]);
+
+        UserInfo::where('id',$id)->update([
+            'first_name'=>$request->first_name,
+            'last_name'=>$request->last_name,
+            'status'=>$request->status,
+            'role_id' => $request->role_id,
+            'created_at'=>Carbon::now(),
+        ]);
+
+        $role = Role::where('id',$user_info->role_id)->first();
+        
+        if ($user) {
+            $user->removeRole($role);
+        }
+
+
+        $user->assignRole($request->role_id);
+
+        Toastr::success("User Updated Successfully!!");
+
+        return redirect()->route('adduser.index');
     }
 
     /**

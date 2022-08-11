@@ -44,18 +44,11 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a href="" class="nav-link">
+                <a href="{{ route('role.index') }}" class="nav-link">
                   <i class="fas fa-arrow-right"></i>
                   <p>Roles</p>
                 </a>
               </li>
-              <li class="nav-item">
-                <a href="" class="nav-link">
-                  <i class="fas fa-arrow-right"></i>
-                  <p>Sales Agent</p>
-                </a>
-              </li>
-  
             </ul>
           </li>
           <li class="nav-item menu-open">
@@ -66,33 +59,7 @@
                 <i class="right fas fa-angle-left"></i>
               </p>
             </a>
-            <ul class="nav nav-treeview">
-              <li class="nav-item">
-                <a href="" class="nav-link">
-                  <i class="fas fa-arrow-right"></i>
-                  <p>Suppliers</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="" class="nav-link">
-                  <i class="fas fa-arrow-right"></i>
-                  <p>Customers</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="" class="nav-link">
-                  <i class="fas fa-arrow-right"></i>
-                  <p>Customer Groups</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="" class="nav-link">
-                  <i class="fas fa-arrow-right"></i>
-                  <p>Import Contacts</p>
-                </a>
-              </li>
-  
-            </ul>
+           
           </li>
           <li class="nav-item menu-open">
             <a href="#" class="nav-link">
@@ -102,6 +69,20 @@
                 <i class="right fas fa-angle-left"></i>
               </p>
             </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="{{ route('brand.index') }}" class="nav-link">
+                  <i class="fas fa-arrow-right"></i>
+                  <p>Brand</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="" class="nav-link">
+                  <i class="fas fa-arrow-right"></i>
+                  <p>Category</p>
+                </a>
+              </li>
+            </ul>
           </li>
           <li class="nav-item">
             <a href="#" class="nav-link">
