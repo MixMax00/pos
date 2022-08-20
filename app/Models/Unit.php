@@ -5,9 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Brand extends Model
+class Unit extends Model
 {
     use HasFactory;
-
-    protected $fillable = ['name','created_at','updated_at'];
+    protected $fillable = ['name','short_name','allow_dec','status','created_at','updated_at'];
 }

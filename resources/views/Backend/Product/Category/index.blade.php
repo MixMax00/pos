@@ -1,7 +1,7 @@
 @extends('layouts.pos_master')
 
 @section('title')
-All Brand
+All Category
 
 @endsection
 
@@ -13,7 +13,7 @@ All Brand
     <div class="col-12 col-sm-12 col-lg-12">
     <div class="card">
     		<div class="card-header d-flex d-lg-flex justify-content-end">
-    		 	<a href="{{ route('brand.create') }}" class="btn-sm btn btn-primary"><i class="fas fa-plus"></i></a>
+                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo"><i class="fas fa-plus"></i></button>
     		</div>
     		<div class="card-body p-0">
               <table class="table table-striped projects">
@@ -23,8 +23,11 @@ All Brand
                               #
                           </th>
                           <th style="width: 20%">
-                              Brand Name
+                              Category Name
                           </th>
+                          <th style="width: 20%">
+                            Category Des
+                           </th>
                           <th style="width: 20%">
                              Action
                           </th>
@@ -41,8 +44,11 @@ All Brand
                             <td>
                              {{ $data->name }}
                             </td>
+                            <td>
+                                {{ $data->description }}
+                               </td>
                             <td class="project-actions text-right">
-                                <a class="btn btn-info btn-sm mb-1" href="{{ route('brand.edit', $data->id) }}">
+                                <a class="btn btn-info btn-sm mb-1" href="{{ route('category.edit', $data->id) }}">
                                     <i class="fas fa-pencil-alt">
                                     </i>
                                     Edit
@@ -65,11 +71,49 @@ All Brand
 </div>
 
 
+
+
+
+
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+    <form action="{{ route('category.store') }}" method="POST">
+        @csrf
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Add Category</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+         
+            <div class="form-group">
+              <label for="recipient-name" class="col-form-label">Category Name:</label>
+              <input type="text" class="form-control" name="name" id="catName">
+            </div>
+            <div class="form-group">
+              <label for="message-text" class="col-form-label">Description:</label>
+              <textarea class="form-control" name="description" id="description"></textarea>
+            </div>
+        
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <input type="submit" class="btn btn-primary" value="Submit"/>
+        </div>
+      </div>
+      <form>
+    </div>
+  </div>
+
+
 @endsection
 
 @section('script')
 <script>
     $(document).ready(function(){
+
         $('.delete').click(function(e){
             e.preventDefault();
 
@@ -99,7 +143,7 @@ All Brand
                     });
                     $.ajax({
                         type : "DELETE",
-                        url : '/brand/delete/'+deleteId,
+                        url : '/category/delete/'+deleteId,
                         data: data,
                         success: function(respons){
                             Swal.fire(

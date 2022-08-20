@@ -71,18 +71,43 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
+                <a href="" class="nav-link">
+                  <i class="fas fa-arrow-right"></i>
+                  <p>List Product</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{ route('product.create') }}" class="nav-link">
+                  <i class="fas fa-arrow-right"></i>
+                  <p>Add Product</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{ route('unit.index') }}" class="nav-link">
+                  <i class="fas fa-arrow-right"></i>
+                  <p>Units</p>
+                </a>
+              </li>
+              <li class="nav-item">
                 <a href="{{ route('brand.index') }}" class="nav-link">
                   <i class="fas fa-arrow-right"></i>
                   <p>Brand</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="" class="nav-link">
+                <a href="{{ route('category.index') }}" class="nav-link">
                   <i class="fas fa-arrow-right"></i>
                   <p>Category</p>
                 </a>
               </li>
             </ul>
+            <li class="nav-item">
+              <a href="{{ route('warranty.index') }}" class="nav-link">
+                <i class="fas fa-arrow-right"></i>
+                <p>Warranty</p>
+              </a>
+            </li>
+          </ul>
           </li>
           <li class="nav-item">
             <a href="#" class="nav-link">

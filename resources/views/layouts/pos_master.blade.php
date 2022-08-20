@@ -2,6 +2,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <meta name="csrf-token" content="{{ csrf_token() }}">
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Dashboard | @yield('title')</title>
@@ -17,6 +18,7 @@
   <!-- Theme style -->
   <link rel="stylesheet" href="http://cdn.bootcss.com/toastr.js/latest/css/toastr.min.css">
   <link rel="stylesheet" href="{{ asset('Backend/assets') }}/dist/css/adminlte.min.css">
+  <script src="https://cdn.tiny.cloud/1/onz1qq8r32nh8nd69xuia3u6f0luldcti2hvaeps22c9uw5q/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
 </head>
 <!--
 `body` tag options:
@@ -101,11 +103,20 @@
 <script src="{{ asset('Backend/assets') }}/dist/js/demo.js"></script>
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
 <script src="{{ asset('Backend/assets') }}/dist/js/pages/dashboard3.js"></script>
+{{-- sweet aleart cdn --}}
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+
+{{-- tyneMce --}}
+
+<script src="https://cdn.jsdelivr.net/npm/@tinymce/tinymce-jquery@2/dist/tinymce-jquery.min.js"></script>
 
 {{-- toastr --}}
  <script src="http://cdn.bootcss.com/toastr.js/latest/js/toastr.min.js"></script>
 <script type="text/javascript" src="{{ asset('Backend/assets')}}/plugins/toastr/toastr.min.js"></script>
 {!! Toastr::message() !!}
 <!-- Page specific script -->
+
+@yield('script')
 </body>
 </html>

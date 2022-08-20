@@ -1,19 +1,17 @@
 @extends('layouts.pos_master')
 
+
 @section('title')
-All Brand
 
 @endsection
 
-
 @section('content')
-
 
 <div class="row">
     <div class="col-12 col-sm-12 col-lg-12">
     <div class="card">
     		<div class="card-header d-flex d-lg-flex justify-content-end">
-    		 	<a href="{{ route('brand.create') }}" class="btn-sm btn btn-primary"><i class="fas fa-plus"></i></a>
+                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo"><i class="fas fa-plus"></i></button>
     		</div>
     		<div class="card-body p-0">
               <table class="table table-striped projects">
@@ -23,8 +21,17 @@ All Brand
                               #
                           </th>
                           <th style="width: 20%">
-                              Brand Name
+                              Warranty Name
                           </th>
+                          <th style="width: 20%">
+                            Warranty Des
+                           </th>
+                           <th style="width: 20%">
+                            Duration
+                           </th>
+                           <th style="width: 20%">
+                            Type
+                           </th>
                           <th style="width: 20%">
                              Action
                           </th>
@@ -34,15 +41,24 @@ All Brand
 
                    @foreach($datas as $data)
                         <tr>
-                            <input type="hidden" value="{{ $data->id }}" class="brandId">
+                            <input type="hidden" value="{{ $data->id }}" class="warrantyId">
                             <td>
                                 {{ $loop->index +1  }}
                             </td>
                             <td>
                              {{ $data->name }}
                             </td>
+                            <td>
+                                {{ $data->description }}
+                            </td>
+                            <td>
+                                {{ $data->duration }}
+                            </td>
+                            <td>
+                                {{ $data->type }}
+                            </td>
                             <td class="project-actions text-right">
-                                <a class="btn btn-info btn-sm mb-1" href="{{ route('brand.edit', $data->id) }}">
+                                <a class="btn btn-info btn-sm mb-1" href="{{ route('warranty.edit', $data->id) }}">
                                     <i class="fas fa-pencil-alt">
                                     </i>
                                     Edit
@@ -65,17 +81,70 @@ All Brand
 </div>
 
 
+
+
+
+
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+    <form action="{{ route('warranty.store') }}" method="POST">
+        @csrf
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Add Warranty</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+         
+            <div class="form-group">
+              <label for="recipient-name" class="col-form-label">Name:</label>
+              <input type="text" class="form-control" name="name" id="catName">
+            </div>
+            <div class="form-group">
+              <label for="message-text" class="col-form-label">Description:</label>
+              <textarea class="form-control" name="description" id="description"></textarea>
+            </div>
+            <div class="form-group">
+                <label for="recipient-name" class="col-form-label">Duration:</label>
+                <input type="number" class="form-control" name="duration" min="1" id="catName">
+            </div>
+            <div class="form-group">
+                <label for="recipient-name" class="col-form-label">Duration Type:</label>
+                <select class="form-control" name="type">
+                    <option value="Days">Days</option>
+                    <option value="Months">Months</option>
+                    <option value="Years">Years</option>
+                </select>
+            </div>
+        
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <input type="submit" class="btn btn-primary" value="Save"/>
+        </div>
+      </div>
+      <form>
+    </div>
+  </div>
+
 @endsection
 
+
 @section('script')
+
+
+
 <script>
     $(document).ready(function(){
+
         $('.delete').click(function(e){
             e.preventDefault();
 
 
 
-            var deleteId = $(this).closest('tr').find('.brandId').val();
+            var deleteId = $(this).closest('tr').find('.warrantyId').val();
             Swal.fire({
                 title: 'Are you sure?',
                 text: "You won't be able to revert this!",
@@ -99,7 +168,7 @@ All Brand
                     });
                     $.ajax({
                         type : "DELETE",
-                        url : '/brand/delete/'+deleteId,
+                        url : '/warranty/delete/'+deleteId,
                         data: data,
                         success: function(respons){
                             Swal.fire(
@@ -116,5 +185,6 @@ All Brand
         });
     });
 </script>
+
 
 @endsection

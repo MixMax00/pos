@@ -16,6 +16,7 @@ return new class extends Migration
         Schema::create('businesses', function (Blueprint $table) {
             $table->id();
             $table->Integer('user_id');
+            $table->string('business_name');
             $table->timestamp('start_date');
             $table->string('currency');
             $table->string('website');
@@ -24,12 +25,12 @@ return new class extends Migration
             $table->string('division');
             $table->string('district');
             $table->string('upzila');
-            $table->integer('zip_code');
+            $table->string('zip_code');
             $table->string('landarea');
             $table->string('surname');
             $table->string('first_name');
             $table->string('last_name');
-            $table->string('logo');
+            $table->string('logo')->nullable();
             $table->tinyInteger('status')->default(1);
             $table->timestamps();
         });

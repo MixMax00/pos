@@ -2,15 +2,15 @@
 
 namespace App\Http\Controllers\Backend\Super;
 
-use App\Http\Controllers\Controller;
+use App\Models\User;
+use App\Models\Business;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
+use Intervention\Image\Image;
+use Spatie\Permission\Models\Role;
+use App\Http\Controllers\Controller;
 use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Support\Facades\Hash;
-use Spatie\Permission\Models\Role;
-use App\Models\Business;
-use App\Models\User;
-use Image;
+use Illuminate\Support\Facades\Validator;
 
 class BusinessController extends Controller
 {
@@ -83,6 +83,7 @@ class BusinessController extends Controller
              if ($user->id) {
                 Business::create([
                     'user_id' => $user->id,
+                    'business_name' => $request->business_name,
                     'start_date' => $request->start_date,
                     'currency' => $request->currency,
                     'website' => $request->website,
@@ -103,7 +104,37 @@ class BusinessController extends Controller
             Toastr::success('Post added successfully');
             return redirect()->back();  
         }else{
-            return 'img pai nai';
+            $user = User::create([
+                'name' =>$request->name,
+                'email' => $request->email,
+                'password' => Hash::make($request->password),
+            ]);
+
+            $role = Role::find(2);
+            $user->assignRole($role);
+
+            if ($user->id) {
+                Business::create([
+                    'user_id' => $user->id,
+                    'business_name' => $request->business_name,
+                    'start_date' => $request->start_date,
+                    'currency' => $request->currency,
+                    'website' => $request->website,
+                    'mobile' => $request->mobile,
+                    'alternate_number' => $request->alternate_number,
+                    'division' => $request->division,
+                    'district' => $request->district,
+                    'upzila' => $request->upzila,
+                    'zip_code' => $request->zip_code,
+                    'landarea' => $request->landarea,
+                    'surname' => $request->surname,
+                    'first_name' => $request->first_name,
+                    'last_name' => $request->last_name,
+                ]);  
+         }
+
+            Toastr::success('Post added successfully');
+            return redirect()->back();
         }
 
 

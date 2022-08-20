@@ -2,14 +2,14 @@
 
 namespace App\Http\Controllers\Backend;
 
+use App\Models\Category;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use App\Http\Controllers\Controller;
-use App\Models\Brand;
 use Brian2694\Toastr\Facades\Toastr;
-use Carbon\Carbon;
 use Illuminate\Support\Facades\Validator;
 
-class BrandController extends Controller
+class CategoryController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -18,8 +18,8 @@ class BrandController extends Controller
      */
     public function index()
     {
-        $datas = Brand::all();
-        return view('Backend.Product.Brand.index', compact('datas'));
+        $datas = Category::all();
+        return view("backend.Product.Category.index", compact('datas'));
     }
 
     /**
@@ -29,8 +29,7 @@ class BrandController extends Controller
      */
     public function create()
     {
-        
-        return view('Backend.Product.Brand.create');
+        //
     }
 
     /**
@@ -43,19 +42,24 @@ class BrandController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'name' => 'required',
+            'description' => 'required',
         ]);
 
         if($validator->passes()){
-            Brand::create([
+            Category::create([
                 'name' => $request->name,
+                'description' => $request->description,
                 'created_at' => Carbon::now(),
             ]);
+           
+            Toastr::success('Category Add Successfully!!');
 
-            Toastr::success('Brands Insert Successfully!!');
-
-            return redirect()->route('brand.index');
+            return back();
+            
         }else{
-            Toastr::error("Please input valid name!!!");
+           
+            Toastr::error('Please Inser Valid Text');
+            return back();
         }
     }
 
@@ -78,8 +82,8 @@ class BrandController extends Controller
      */
     public function edit($id)
     {
-        $edit = Brand::find($id);
-        return view('Backend.Product.Brand.edit', compact('edit'));
+        $edit = Category::find($id);
+        return view('backend.Product.Category.edit', compact('edit'));
     }
 
     /**
@@ -91,24 +95,7 @@ class BrandController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $validator = Validator::make($request->all(), [
-            'name' => 'required',
-        ]);
-
-        $brand_info = Brand::find($id);
-
-        if($validator->passes()){
-            Brand::where('id', $brand_info->id)->update([
-                'name' => $request->name,
-                'updated_at' => Carbon::now(),
-            ]);
-
-            Toastr::success('Brands Update Successfully!!');
-
-            return redirect()->route('brand.index');
-        }else{
-            Toastr::error("Please input valid name!!!");
-        }
+        //
     }
 
     /**
@@ -117,9 +104,10 @@ class BrandController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function deleted($id){
-        $delete_id = Brand::find($id);
-        $delete_id->delete();
-        return response()->json(['status' => "Brand Deleted Successfully!!"]);
+    public function deleted($id)
+    {
+        $deleted = Category::find($id);
+        $deleted->delete();
+        return response()->json(['status'=>'Category Deleted Successfully!!']);
     }
 }

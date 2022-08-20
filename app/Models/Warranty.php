@@ -5,9 +5,9 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Brand extends Model
+class Warranty extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name','created_at','updated_at'];
+    protected $fillable = ['name','description','duration','type','status','created_at','updated_at'];
 }
